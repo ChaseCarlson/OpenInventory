@@ -1,0 +1,68 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'application'
+}
+
+group = 'com.chasecarlson.openinventory'
+version = '0.0.1'
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
+
+application {
+	mainClass = "com.chasecarlson.openinventory.server.ServerApplication"
+}
+
+repositories {
+	mavenCentral()
+}
+
+def webappPath = "$projectDir/src/main/webapp"
+sourceSets {
+	main {
+		resources {
+			srcDirs = ["$projectDir/src/main/resources"]
+		}
+	}
+}
+
+processResources {
+	dependsOn "buildReact"
+}
+
+task buildReact(type: Exec) {
+	dependsOn "installReact"
+	workingDir "$webappPath"
+	inputs.dir "$webappPath"
+	group = BasePlugin.BUILD_GROUP
+	commandLine "npm.cmd", "run-script", "build"
+	finalizedBy "copyReact"
+}
+
+task installReact(type: Exec) {
+	workingDir "$webappPath"
+	inputs.dir "$webappPath"
+	group = BasePlugin.BUILD_GROUP
+	commandLine "npm.cmd", "audit", "fix"
+	commandLine "npm.cmd", "install"
+}
+
+task copyReact(type: Copy) {
+	from "$webappPath/build"
+	into "build/resources/main/static/webapp"
+	outputs.upToDateWhen { false }
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
