@@ -22,13 +22,18 @@ import { useParams } from "react-router";
 export default function MainAppBar(props) {
 	const id = useParams().id;
 	const [sidebarOpen, setSidebarOpen] = React.useState(false);
-	const [parentId, setParentId] = React.useState();
+	const [parentId, setParentId] = React.useState(0);
 
 	React.useEffect(() => {
 		api.get("/item/"+id)
 		.then((res) => {
 			var data = res.data;
-			setParentId(data.parent);
+			if (data.parent) {
+				setParentId(data.parent);
+			}
+			else {
+				setParentId(0);
+			}
 		});
 	});
 
