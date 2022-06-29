@@ -38,8 +38,8 @@ public class ItemController {
 		return itemService.saveItem(item);
 	}
 
-	@DeleteMapping
-	public void delete(@RequestBody Item item) {
-		itemService.deleteItem(item);
+	@DeleteMapping("/{uid}")
+	public void delete(@PathVariable("uid") long uid) {
+		itemService.deleteItem(itemService.getItem(uid));
 	}
 }

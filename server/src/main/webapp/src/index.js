@@ -9,17 +9,22 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
 	<React.StrictMode>
-	<BrowserRouter>
-		<Routes>
-			<Route path="/app" element={<App />} />
-			<Route path="/app/items/" element={<Navigate replace to="/app/items/0/children" />} />
-			<Route path="/app/items/:id/children" element={<Items />} />
-			<Route path="*" element={<Navigate replace to="/app" />} />
-		</Routes>
-	</BrowserRouter>
+	<QueryClientProvider client={queryClient}>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/app" element={<App />} />
+				<Route path="/app/items/" element={<Navigate replace to="/app/items/0/children" />} />
+				<Route path="/app/items/:id/children" element={<Items />} />
+				<Route path="*" element={<Navigate replace to="/app" />} />
+			</Routes>
+		</BrowserRouter>
+	</QueryClientProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

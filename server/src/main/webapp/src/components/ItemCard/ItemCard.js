@@ -9,10 +9,21 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material';
 import { Link } from "react-router-dom"
+import api from "../Api/Api"
+import { useMutation, useQueryClient } from 'react-query';
 
 export default function ItemCard(props) {
 	const [anchorEl, setAnchorEl] = React.useState();
 	const [menuOpen, setMenuOpen] = React.useState(false);
+
+	const queryClient = useQueryClient();
+
+	const deleteMutation = useMutation(deleteItem, {
+		onSuccess: (data, variables, context) => {
+			let t = ["items", props.item.parent];
+			queryClient.invalidateQueries(t);
+		},
+	});
 
 
 	const handleOpenMenu = (event) => {
@@ -31,8 +42,13 @@ export default function ItemCard(props) {
 		event.preventDefault();
 	}
 
-	function deleteItem() {
+	function deletePressed() {
+	  handleCloseMenu();
+		deleteMutation.mutate({id: props.item.id});
+	}
 
+	function deleteItem(item) {
+	  return api.delete("/item/"+item.id);
 	}
 
 
@@ -83,7 +99,7 @@ export default function ItemCard(props) {
 				'aria-labelledby': 'basic-button',
 			}}
 		>
-			<MenuItem onClick={handleCloseMenu}>
+			<MenuItem onClick={deletePressed}>
 				<ListItemIcon>
 					<DeleteIcon fontSize="medium"/>
 				</ListItemIcon>

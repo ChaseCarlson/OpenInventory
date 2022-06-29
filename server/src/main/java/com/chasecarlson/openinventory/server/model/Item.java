@@ -22,6 +22,9 @@ public class Item {
 	@Column(name="title")
 	private String title;
 
+	@Column(name="afield")
+	private String afield;
+
 	@Column(name="description")
 	private String description;
 
