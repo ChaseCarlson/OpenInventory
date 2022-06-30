@@ -22,9 +22,6 @@ public class Item {
 	@Column(name="name")
 	private String name;
 
-	@Column(name="afield")
-	private String afield;
-
 	@Column(name="description")
 	private String description;
 
