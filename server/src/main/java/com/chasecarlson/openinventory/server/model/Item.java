@@ -19,8 +19,8 @@ public class Item {
 	@Column(name="parent", nullable = false)
 	private long parent = 0;
 
-	@Column(name="title")
-	private String title;
+	@Column(name="name")
+	private String name;
 
 	@Column(name="afield")
 	private String afield;
@@ -36,8 +36,8 @@ public class Item {
 
 	public Item() {}
 
-	public Item(String title, String description) {
-		this.title = title;
+	public Item(String name, String description) {
+		this.name = name;
 		this.description = description;
 	}
 
@@ -47,10 +47,10 @@ public class Item {
 
 	public void setParent(long parent) { this.parent = parent; }
 
-	public String getTitle() { return title; }
+	public String getName() { return name; }
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {

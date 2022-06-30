@@ -34,7 +34,7 @@ public class ItemController {
 	public Item add(@RequestBody Item newItem) {
 		Item item = new Item();
 		item.setParent(newItem.getParent());
-		item.setTitle(newItem.getTitle());
+		item.setName(newItem.getName());
 		return itemService.saveItem(item);
 	}
 

@@ -28,7 +28,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> getItemsByParent(long parent) {
-		return repository.findByParentOrderByTitle(parent);
+		return repository.findByParentOrderByName(parent);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
 	@Override
 	public void deleteItem(Item item) {
 		// Delete the item's descendants so we don't have any orphaned items
-		ServerApplication.logger.info("Deleting item: {}", item.getTitle());
+		ServerApplication.logger.info("Deleting item: {}", item.getName());
 		List<Item> children = getItemsByParent(item.getId());
 		for (Item childItem : children)
 		{

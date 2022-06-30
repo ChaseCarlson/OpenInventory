@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import api from "../../Api/Api";
 
 export default function AddItemDialog(props) {
-	const [title, setTitle] = React.useState();
+	const [name, setName] = React.useState();
 
 	const queryClient = useQueryClient();
 
@@ -17,12 +17,12 @@ export default function AddItemDialog(props) {
 	function addItem(newItem) {
 		return api.post("/item", {
 			parent: newItem.parent,
-			title: newItem.title
+			name: newItem.name
 		});
 	}
 
 	function createPressed() {
-		addMutation.mutate({parent: props.parent, title: title.value});
+		addMutation.mutate({parent: props.parent, name: name.value});
 		props.onClose();
 	}
 
@@ -35,11 +35,11 @@ export default function AddItemDialog(props) {
           <TextField
             autoFocus
             margin="dense"
-            id="title"
-            label="Title"
+            id="name"
+            label="Name"
             fullWidth
             variant="outlined"
-						inputRef={setTitle}
+						inputRef={setName}
           />
         </DialogContent>
         <DialogActions>

@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface ItemRepository extends CrudRepository<Item, Long> {
 	Item findById(long id);
 	List<Item> findByParent(long parent);
-	List<Item> findByParentOrderByTitle(long parent);
+	List<Item> findByParentOrderByName(long parent);
 }

@@ -51,6 +51,8 @@ export default function ItemCard(props) {
 	  return api.delete("/item/"+item.id);
 	}
 
+	console.log("render itemcard");
+	console.log(props.item.name);
 
 	return (
 		<Card sx={{ maxWidth: 1}} raised={true}>
@@ -63,7 +65,7 @@ export default function ItemCard(props) {
 							<MoreVertIcon />
 						</IconButton>
 					}
-					title={props.item.title}
+					title={props.item.name}
 				/>
 				<CardMedia
 					component="img"

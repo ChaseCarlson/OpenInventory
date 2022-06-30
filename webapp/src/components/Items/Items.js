@@ -25,6 +25,8 @@ export default function Items(props) {
 
 	const query = useQuery(["items", id], fetchItems);
 
+	console.log("render");
+
 	return (
 		<App>
 			<Box fixed sx={{m:2}}>
